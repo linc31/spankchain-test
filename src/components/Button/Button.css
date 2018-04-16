@@ -1,12 +1,16 @@
 .Button {
-  width: 154.5px;
-  height: 19px;
-  border-radius: 9.5px;
-  border: solid 0.7px #ffffff;
-  background-color: #ff3b81;
+  width: 250px;
+  height: 50px;
+  border-radius: 50px;
+  background-color: white;
+  color: #ff3b81;
+  margin-bottom: 40px;
+  margin-top: 20px;
+  font-size: 18px;
+  border: none;
 }
 
 .Button:disabled {
-  color: slategray;
+  color: #ff3b81;
   cursor: not-allowed;
 }

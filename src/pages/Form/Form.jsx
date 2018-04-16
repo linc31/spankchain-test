@@ -3,6 +3,10 @@ import React, { Component } from 'react';
 import './Form.css';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
+import PhotoUpload from '../../components/PhotoUpload/PhotoUpload';
+
+import selfieID from '../../assets/img/selfie-id.png';
+import yourID from '../../assets/img/your-id.png';
 
 class Form extends Component {
   state = {
@@ -23,7 +27,7 @@ class Form extends Component {
       password: {
         elementType: 'input',
         elementConfig: {
-          type: 'text',
+          type: 'password',
           placeholder: 'Password'
         },
         value: '',
@@ -42,7 +46,8 @@ class Form extends Component {
         },
         value: '',
         validation: {
-          required: true
+          required: true,
+          age: true
         },
         valid: false,
         touched: false,
@@ -79,7 +84,7 @@ class Form extends Component {
         },
         valid: false,
         touched: false,
-        message: "Invalid email"
+        message: "Invalid character has been detected"
       },
       emailConfirm: {
         elementType: 'email',
@@ -94,7 +99,22 @@ class Form extends Component {
         },
         valid: false,
         touched: false,
-        message: "Email address doesn’t match"
+        message: "Email address doesn't match"
+      },
+      checkbox: {
+        elementType: 'checkbox',
+        elementConfig: {
+          type: 'checkbox',
+          placeholder: ''
+        },
+        value: '',
+        validation: {
+          required: true,
+          checked: true
+        },
+        valid: false,
+        touched: false,
+        message: "Must accept Terms & Conditions"
       }
     },
     formIsValid: false
@@ -121,7 +141,13 @@ class Form extends Component {
       isValid = value === this.state.signupForm.email.value;
     }
     if (rules.emailCheck) {
-      isValid = value.split('').indexOf('!') === -1;
+      isValid = value.split('').indexOf('!') === -1 && value.split('').indexOf('#') === -1 && value.split('').indexOf('$') === -1 && value.split('').indexOf('%') === -1 && value.split('').indexOf('&') === -1 && value.split('').indexOf('*') === -1;
+    }
+    if (rules.age) {
+      isValid = (2018 - parseInt(value.split('').map((e, i) => i < 4 ? e : null).join('')) >= 21)
+    }
+    if (rules.checked) {
+      isValid = value !== this.state.signupForm.checkbox.checked;
     }
     return isValid;
   }
@@ -135,16 +161,15 @@ class Form extends Component {
       ...updatedForm[inputIdentifier]
     };
     updatedFormElement.value = event.target.value;
-    updatedFormElement.valid = this.checkValidation(updatedFormElement.value, updatedFormElement.validation);
+    updatedFormElement.valid = event.target.type === 'checkbox' ? event.target.checked : this.checkValidation(updatedFormElement.value, updatedFormElement.validation);
+    console.log(updatedFormElement.valid)
     updatedFormElement.touched = true;
     updatedForm[inputIdentifier] = updatedFormElement;
-
     let formIsValid = true;
     for (let inputIds in updatedForm) {
       formIsValid = updatedForm[inputIds].valid && formIsValid;
     }
-
-    console.log(updatedFormElement);
+    // console.log(updatedFormElement);
     this.setState({signupForm: updatedForm, formIsValid});
   }
 
@@ -170,13 +195,17 @@ class Form extends Component {
             message={formElement.config.message}
             changed={(event) => this.inputChangedHandler(event, formElement.id)} />
           ))}
+          <div style={{display: "flex", justifyContent: "center"}}>
+            <PhotoUpload title='Your ID' IDPhoto={yourID}/>
+            <PhotoUpload title='Selfie + ID' IDPhoto={selfieID}/>
+          </div>
           <Button disabled={!this.state.formIsValid} />
       </form>
     );
     return (
       <div>
+        <div className="Message">All entered information is hidden from users. <br/> This is for age verification purposes only.</div>
         {form}
-        
       </div>
     )
   };

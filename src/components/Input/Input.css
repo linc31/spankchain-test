@@ -1,33 +1,50 @@
 .Input {
-  width: 50%;
+  width: 28%;
   padding: 10px;
   box-sizing: border-box;
   margin: 0 auto;
-}
-
-.Label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 8px;
+  color: white;
+  font-family: Cartograph;
 }
 
 .InputElement {
   outline: none;
-  border: 1px solid maroon;
-  background-color: white;
+  border: none;
+  color: white;
+  border-bottom: 1.5px solid white;
+  background-color: transparent;
   font: inherit;
   padding: 6px 10px;
   display: block;
   width: 100%;
   box-sizing: border-box;
+  font-family: Cartograph;
+  height: 48px;
+  border-radius: 5px 5px 0px 0px;
+}
+
+.InputElement::placeholder {
+  color: white;
 }
 
 .InputElement:focus {
   outline: none;
-  background-color: #ccc;
+  border: none;
+  background-color: #ec3979;
+  border-bottom: 1.5px solid white;
 }
 
-.Invalid {
-  border: 1px solid red;
-  background-color: salmon;
+.ErrorMessage {
+  font-family: Cartograph;
+  font-size: 11px;
+  margin-left: 12px;
+  margin-top: 8px;
+  letter-spacing: 1px;
+}
+
+.TermsCondition {
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  font-family: GT-Haptik;
 }
