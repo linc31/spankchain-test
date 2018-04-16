@@ -162,14 +162,12 @@ class Form extends Component {
     };
     updatedFormElement.value = event.target.value;
     updatedFormElement.valid = event.target.type === 'checkbox' ? event.target.checked : this.checkValidation(updatedFormElement.value, updatedFormElement.validation);
-    console.log(updatedFormElement.valid)
     updatedFormElement.touched = true;
     updatedForm[inputIdentifier] = updatedFormElement;
     let formIsValid = true;
     for (let inputIds in updatedForm) {
       formIsValid = updatedForm[inputIds].valid && formIsValid;
     }
-    // console.log(updatedFormElement);
     this.setState({signupForm: updatedForm, formIsValid});
   }
 
